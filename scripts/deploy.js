@@ -1,36 +1,23 @@
+// We require the Hardhat Runtime Environment explicitly here. This is optional
+// but useful for running the script in a standalone fashion through `node <script>`.
+//
+// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
+// will compile your contracts, add the Hardhat Runtime Environment's members to the
+// global scope, and execute the script.
 const hre = require("hardhat");
 
 async function main() {
-    const initBalance = 1; // Initial balance to deploy contract with
-    const MySmartContract = await hre.ethers.getContractFactory("MySmartContract");
-    const myContract = await MySmartContract.deploy(initBalance);
-    await myContract.deployed();
+  const initBalance = 1;
+  const namanAssessment = await hre.ethers.getContractFactory("namanAssessment");
+  const assessment = await namanAssessment.deploy();
+  await assessment.deployed();
 
-    myContract.displayAddress();
-
-    console.log(`A contract with balance of ${initBalance} ETH deployed to ${myContract.address}`);
-
-    myContract.on("ShowAddress", (walletAddress) => {
-        console.log(`Wallet address: ${walletAddress}`);
-    });
-
-    myContract.on("DepositEvent", (depositValue, balance) => {
-        console.log(`New deposit: ${depositValue} ETH, new balance: ${balance} ETH`);
-    });
-
-    myContract.on("WithdrawEvent", (withdrawValue, balance) => {
-        console.log(`New withdrawal: ${withdrawValue} ETH, new balance: ${balance} ETH`);
-    });
-
-    myContract.on("RedeemEvent", (amount) => {
-        console.log(`Redeemed amount: ${amount} ETH`);
-    });
-
-    // Call the "redeem" function
-    await myContract.redeem();
+  console.log(`A contract with balance of ${initBalance} eth deployed to ${assessment.address}`);
 }
 
+
 main().catch((error) => {
-    console.error(error);
-    process.exitCode = 1;
-});
+  console.error(error);
+  process.exitCode = 1;
+}
+);
